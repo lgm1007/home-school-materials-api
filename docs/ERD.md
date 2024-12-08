@@ -34,6 +34,7 @@ erDiagram
         Long givenHomeSchoolId
         Long problemId
         String submitAnswer
+        String answered
     }
 
     User {
@@ -89,6 +90,7 @@ erDiagram
     * givenHomeSchoolId: 학생에게 출제된 학습지 ID
     * problemId: 문제 ID
     * submitAnswer: 학생이 제출한 정답
+    * answered: 정답을 맞췄는지 틀렸는지 정보 (채점 후 업데이트)
 
 ### User 테이블
 * 설명: 사용자 (선생님, 학생)에 대한 정보가 저장되는 테이블
