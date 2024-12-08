@@ -7,6 +7,7 @@ import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemListRespo
 import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemResponse
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemLevel
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/v1")
@@ -21,11 +22,13 @@ class ProblemApi {
 		@RequestParam unitCodes: List<String>,
 		@RequestParam problemType: ProblemType,
 		@RequestParam problemLevel: ProblemLevel
-	): ProblemListResponse {
-		return ProblemListResponse(
-			listOf(
-				ProblemResponse(1, "유형코드", ProblemType.SELECTION, 1, "문제1", "3"),
-				ProblemResponse(2, "유형코드", ProblemType.SELECTION, 2, "문제2", "5"),
+	): ResponseEntity<ProblemListResponse> {
+		return ResponseEntity.ok(
+			ProblemListResponse(
+				listOf(
+					ProblemResponse(1, "유형코드", ProblemType.SELECTION, 1, "문제1", "3"),
+					ProblemResponse(2, "유형코드", ProblemType.SELECTION, 2, "문제2", "5"),
+				)
 			)
 		)
 	}
@@ -34,12 +37,14 @@ class ProblemApi {
 	 * 학습지 문제 조회 API
 	 */
 	@GetMapping("/problems/{homeSchoolId}")
-	fun getProblemByHomeSchoolId(@PathVariable homeSchoolId: Long): ProblemListResponse {
-		return ProblemListResponse(
-			listOf(
-				ProblemResponse(1, "유형코드", ProblemType.SELECTION, 1, "문제1"),
-				ProblemResponse(2, "유형코드", ProblemType.SELECTION, 2, "문제2"),
-				ProblemResponse(3, "유형코드", ProblemType.SUBJECTIVE, 3, "문제3"),
+	fun getProblemByHomeSchoolId(@PathVariable homeSchoolId: Long): ResponseEntity<ProblemListResponse> {
+		return ResponseEntity.ok(
+			ProblemListResponse(
+				listOf(
+					ProblemResponse(1, "유형코드", ProblemType.SELECTION, 1, "문제1"),
+					ProblemResponse(2, "유형코드", ProblemType.SELECTION, 2, "문제2"),
+					ProblemResponse(3, "유형코드", ProblemType.SUBJECTIVE, 3, "문제3"),
+				)
 			)
 		)
 	}
@@ -50,13 +55,15 @@ class ProblemApi {
 	@PutMapping("/grade/problems")
 	fun gradeProblems(
 		@RequestBody gradeProblem: GradeProblemRequest
-	): GradeProblemResultResponse {
-		return GradeProblemResultResponse(
-			12345L,
-			1L,
-			listOf(
-				GradeProblemResponse(1, "3", "3", true),
-				GradeProblemResponse(2, "5", "4", false),
+	): ResponseEntity<GradeProblemResultResponse> {
+		return ResponseEntity.ok(
+			GradeProblemResultResponse(
+				12345L,
+				1L,
+				listOf(
+					GradeProblemResponse(1, "3", "3", true),
+					GradeProblemResponse(2, "5", "4", false),
+				)
 			)
 		)
 	}
