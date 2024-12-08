@@ -37,7 +37,9 @@ class ProblemApi {
 	 * 학습지 문제 조회 API
 	 */
 	@GetMapping("/problems/{homeSchoolId}")
-	fun getProblemByHomeSchoolId(@PathVariable homeSchoolId: Long): ResponseEntity<ProblemListResponse> {
+	fun getProblemByHomeSchoolId(
+		@PathVariable("homeSchoolId") homeSchoolId: Long
+	): ResponseEntity<ProblemListResponse> {
 		return ResponseEntity.ok(
 			ProblemListResponse(
 				listOf(
@@ -52,7 +54,7 @@ class ProblemApi {
 	/**
 	 * 채점하기 API
 	 */
-	@PutMapping("/grade/problems")
+	@PutMapping("/problems/grade")
 	fun gradeProblems(
 		@RequestBody gradeProblem: GradeProblemRequest
 	): ResponseEntity<GradeProblemResultResponse> {
