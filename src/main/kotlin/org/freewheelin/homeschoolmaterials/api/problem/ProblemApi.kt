@@ -6,14 +6,18 @@ import org.freewheelin.homeschoolmaterials.api.problem.response.GradeProblemResu
 import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemListResponse
 import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemResponse
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemLevel
+import org.freewheelin.homeschoolmaterials.domain.problem.ProblemService
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemType
 import org.freewheelin.homeschoolmaterials.domain.problem.UnitCode
+import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/v1")
 @RestController
-class ProblemApi {
+class ProblemApi(
+	private val problemService: ProblemService
+) {
 	/**
 	 * 문제 조회 API
 	 */
@@ -26,9 +30,10 @@ class ProblemApi {
 	): ResponseEntity<ProblemListResponse> {
 		return ResponseEntity.ok(
 			ProblemListResponse(
-				listOf(
-					ProblemResponse(1, "유형코드", ProblemType.SELECTION, 1, "문제1", "3"),
-					ProblemResponse(2, "유형코드", ProblemType.SELECTION, 2, "문제2", "5"),
+				ProblemResponse.listToTeacherResponse(
+					problemService.getProblems(
+						FindProblemParam(totalCount, unitCodes, problemType, problemLevel)
+					)
 				)
 			)
 		)

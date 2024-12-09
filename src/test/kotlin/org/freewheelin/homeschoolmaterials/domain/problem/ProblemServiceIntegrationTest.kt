@@ -70,8 +70,8 @@ class ProblemServiceIntegrationTest {
     @Test
     @DisplayName("총 저장된 문제가 난이도 하 10개, 중 10개, 상 10개에서 선택된 난이도: 하, totalCount: 20일 때 문제 조회하기")
     fun getProblemsTest() {
-        problemRepository.saveAll(ProblemDto.listFrom(makeProblems(UnitCode.UNIT_7139, ProblemType.SELECTION)))
-        val param = FindProblemParam(20, listOf(UnitCode.UNIT_7139), ProblemType.SELECTION, ProblemLevel.LOW)
+        problemRepository.saveAll(ProblemDto.listFrom(makeProblems(UnitCode.UC_1580, ProblemType.SELECTION)))
+        val param = FindProblemParam(20, listOf(UnitCode.UC_1580), ProblemType.SELECTION, ProblemLevel.LOW)
 
         val actual = sut.getProblems(param)
 
