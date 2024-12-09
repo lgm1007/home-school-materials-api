@@ -7,6 +7,7 @@ import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemListRespo
 import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemResponse
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemLevel
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemType
+import org.freewheelin.homeschoolmaterials.domain.problem.UnitCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -19,7 +20,7 @@ class ProblemApi {
 	@GetMapping("/problems")
 	fun getProblems(
 		@RequestParam totalCount: Int,
-		@RequestParam unitCodes: List<String>,
+		@RequestParam unitCodes: List<UnitCode>,
 		@RequestParam problemType: ProblemType,
 		@RequestParam problemLevel: ProblemLevel
 	): ResponseEntity<ProblemListResponse> {
