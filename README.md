@@ -13,6 +13,9 @@
 ### 요구 API
 #### 1️⃣ [GET] 문제 조회
 ##### API 스펙
+* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
+* [API Request 스펙](src/main/resources/http/problemApiRequest.http)
+
 ##### 설명
 * 선생님은 총 문제 수, 유형코드 리스트, 문제 유형 (주관식, 객관식, 전체), 난이도를 조건으로 문제를 조회한다.
 * **Request Param**
@@ -37,12 +40,18 @@
 
 #### 2️⃣ [POST] 학습지 생성
 ##### API 스펙
+* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
+* [API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
+
 ##### 설명
 * 선생님은 1번에서 조회한 문제 리스트를 바탕으로 학습지를 생성한다.
 * 학습지 생성에 포함될 수 있는 최대 문제 개수는 50개이다.
 
 #### 3️⃣ [POST] 학생에게 학습지 출제하기
 ##### API 스펙
+* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
+* [API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
+
 ##### 설명
 * 선생님은 학생에게 2번에서 생성했던 학습지 1개를 출제한다.
 * 학습지는 동시에 2명 이상의 학생에게 출제가 가능하다.
@@ -50,18 +59,27 @@
 
 #### 4️⃣ [GET] 학습지의 문제 조회하기
 ##### API 스펙
+* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
+* [API Request 스펙](src/main/resources/http/problemApiRequest.http)
+
 ##### 설명
 * 학생은 자신에게 출제된 학습지의 문제 목록을 확인할 수 있다.
 * 학습지 1개에 대한 문제 목록을 확인한다.
 
 #### 5️⃣ [PUT] 채점하기
 ##### API 스펙
+* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
+* [API Request 스펙](src/main/resources/http/problemApiRequest.http)
+
 ##### 설명
 * 학생은 4번에서 확인했던 문제들을 채점할 수 있다.
 * 채점 결과는 맞음, 틀림 2가지 경우가 존재한다.
 
 #### 6️⃣ [GET] 학습지 학습 통계 분석하기
 ##### API 스펙
+* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
+* [API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
+
 ##### 설명
 * 선생님은 1개의 학습지에 대해 학생들의 학습 통계를 파악할 수 있다.
 * 조회한 1개의 학습지에 대해 아래의 정보들을 파악할 수 있다.

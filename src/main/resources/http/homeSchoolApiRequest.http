@@ -1,0 +1,39 @@
+### 학습지 생성 API
+POST http://localhost:8080/api/v1/home-schools
+Content-Type: application/json
+
+{
+  "name": "학습지 1",
+  "teacherId": 1,
+  "problemList": [
+    {
+      "id": 1,
+      "unitCode": "UNIT_7139",
+      "problemType": "SELECTION",
+      "level": 1,
+      "question": "문제 1번",
+      "answer": "3"
+    },
+    {
+      "id": 2,
+      "unitCode": "UNIT_7139",
+      "problemType": "SELECTION",
+      "level": 2,
+      "question": "문제 2번",
+      "answer": "5"
+    }
+  ]
+}
+
+### 학습지 출제 API
+POST http://localhost:8080/api/v1/home-schools/present
+Content-Type: application/json
+
+{
+  "homeSchoolId": 1,
+  "studentId": 12345
+}
+
+### 학습지 학습 통계 분석 API
+GET http://localhost:8080/api/v1/home-schools/analyze/1
+Content-Type: application/json
