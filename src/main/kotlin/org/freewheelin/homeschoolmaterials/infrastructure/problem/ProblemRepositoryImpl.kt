@@ -15,6 +15,10 @@ class ProblemRepositoryImpl(
         return jpaRepository.findAllByUnitCodeInAndProblemType(unitCodes, problemType)
     }
 
+    override fun getAllByIds(ids: List<Long>): List<Problem> {
+        return jpaRepository.findAllByIdIn(ids)
+    }
+
     override fun saveAll(problemDtos: List<ProblemDto>): List<Problem> {
         return jpaRepository.saveAll(Problem.listFrom(problemDtos))
     }

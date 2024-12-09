@@ -13,4 +13,6 @@ interface ProblemJpaRepository : JpaRepository<Problem, Long> {
         @Param("unitCodes") unitCodes: List<UnitCode>,
         @Param("problemType") problemType: ProblemType
     ): List<Problem>
+
+    fun findAllByIdIn(ids: List<Long>): List<Problem>
 }

@@ -2,7 +2,9 @@ package org.freewheelin.homeschoolmaterials.domain.problem
 
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
+import org.freewheelin.homeschoolmaterials.domain.problem.dto.HomeSchoolProblemDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.ProblemDto
+import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.HomeSchoolProblem
 import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.Problem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -14,10 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest
 class ProblemServiceIntegrationTest {
     @Autowired lateinit var sut: ProblemService
     @Autowired lateinit var problemRepository: ProblemRepository
+    @Autowired lateinit var homeSchoolProblemRepository: HomeSchoolProblemRepository
 
     @BeforeEach
     fun clearDB() {
         problemRepository.deleteAll()
+        homeSchoolProblemRepository.deleteAll()
     }
 
     private fun makeProblems(unitCode: UnitCode, problemType: ProblemType): List<Problem> {
@@ -55,6 +59,14 @@ class ProblemServiceIntegrationTest {
         )
     }
 
+    private fun makeHomeSchoolProblem(homeSchoolId: Long): List<HomeSchoolProblem> {
+        return listOf(
+            HomeSchoolProblem(homeSchoolId, 1),
+            HomeSchoolProblem(homeSchoolId, 2),
+            HomeSchoolProblem(homeSchoolId, 3),
+        )
+    }
+
     @Test
     @DisplayName("총 저장된 문제가 난이도 하 10개, 중 10개, 상 10개에서 선택된 난이도: 하, totalCount: 20일 때 문제 조회하기")
     fun getProblemsTest() {
@@ -67,6 +79,20 @@ class ProblemServiceIntegrationTest {
         assertThat(actual.filter { ProblemLevel.LOW.levels.contains(it.level) }.size).isEqualTo(10) // 조회된 문제 중 난이도 하 인 문제 개수
         assertThat(actual.filter { ProblemLevel.MEDIUM.levels.contains(it.level) }.size).isEqualTo(6) // 조회된 문제 중 난이도 중 인 문제 개수
         assertThat(actual.filter { ProblemLevel.HIGH.levels.contains(it.level) }.size).isEqualTo(4) // 조회된 문제 중 난이도 상 인 문제 개수
+    }
+
+    @Test
+    @DisplayName("학습지에 해당하는 문제 목록 조회 테스트")
+    fun getProblemByHomeSchoolIdTest() {
+        problemRepository.saveAll(ProblemDto.listFrom(makeProblems(UnitCode.UNIT_7139, ProblemType.SELECTION)))
+        homeSchoolProblemRepository.saveAll(HomeSchoolProblemDto.listFrom(makeHomeSchoolProblem(1)))
+
+        val actual = sut.getProblemByHomeSchoolId(1)
+
+        assertThat(actual.size).isEqualTo(3)
+        assertThat(actual.map { it.id }.contains(1)).isTrue()
+        assertThat(actual.map { it.id }.contains(2)).isTrue()
+        assertThat(actual.map { it.id }.contains(3)).isTrue()
     }
 
 }
