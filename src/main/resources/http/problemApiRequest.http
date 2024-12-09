@@ -1,0 +1,16 @@
+### 문제 조회 API
+GET https://localhost:8080/api/v1/problems?totalCount=10&unitCodes=UNIT_7139&problemType=SELECTION&problemLevel=LOW
+Content-Type: application/json
+
+### 학습지 문제 조회 API
+GET http://localhost:8080/api/v1/problems/1
+Content-Type: application/json
+
+### 채점하기 API
+PUT http://localhost:8080/api/v1/problems/grade
+Content-Type: application/json
+
+{
+  "studentId": 12345,
+  "homeSchoolId": 1
+}
