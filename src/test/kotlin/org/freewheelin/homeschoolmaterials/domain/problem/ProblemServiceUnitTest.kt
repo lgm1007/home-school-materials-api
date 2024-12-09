@@ -24,9 +24,9 @@ class ProblemServiceUnitTest {
     @DisplayName("문제 조회 Mock 테스트 - 조회된 총 문제: 난이도 하 10개, 중 10개, 상 10개, 선택된 난이도 : 하, totalCount : 20")
     fun getProblemsByLowLevelTest() {
         `when`(problemRepository.getAllByUnitCodesAndProblemType(any(), any()))
-            .thenReturn(makeProblems(UnitCode.UNIT_7139, ProblemType.SELECTION))
+            .thenReturn(makeProblems(UnitCode.UC_1580, ProblemType.SELECTION))
 
-        val param = FindProblemParam(20, listOf(UnitCode.UNIT_7139), ProblemType.SELECTION, ProblemLevel.LOW)
+        val param = FindProblemParam(20, listOf(UnitCode.UC_1580), ProblemType.SELECTION, ProblemLevel.LOW)
 
         val actual = sut.getProblems(param)
 
@@ -40,9 +40,9 @@ class ProblemServiceUnitTest {
     @DisplayName("문제 조회 Mock 테스트 - 조회된 총 문제: 난이도 하 10개, 중 10개, 상 10개, 선택된 난이도 : 중, totalCount : 20")
     fun getProblemsByMediumLevelTest() {
         `when`(problemRepository.getAllByUnitCodesAndProblemType(any(), any()))
-            .thenReturn(makeProblems(UnitCode.UNIT_7139, ProblemType.SELECTION))
+            .thenReturn(makeProblems(UnitCode.UC_1580, ProblemType.SELECTION))
 
-        val param = FindProblemParam(20, listOf(UnitCode.UNIT_7139), ProblemType.SELECTION, ProblemLevel.MEDIUM)
+        val param = FindProblemParam(20, listOf(UnitCode.UC_1580), ProblemType.SELECTION, ProblemLevel.MEDIUM)
 
         val actual = sut.getProblems(param)
 
@@ -56,9 +56,9 @@ class ProblemServiceUnitTest {
     @DisplayName("문제 조회 Mock 테스트 - 조회된 총 문제: 난이도 하 10개, 중 10개, 상 10개, 선택된 난이도 : 상, totalCount : 20")
     fun getProblemsByHighLevelTest() {
         `when`(problemRepository.getAllByUnitCodesAndProblemType(any(), any()))
-            .thenReturn(makeProblems(UnitCode.UNIT_7139, ProblemType.SELECTION))
+            .thenReturn(makeProblems(UnitCode.UC_1580, ProblemType.SELECTION))
 
-        val param = FindProblemParam(20, listOf(UnitCode.UNIT_7139), ProblemType.SELECTION, ProblemLevel.HIGH)
+        val param = FindProblemParam(20, listOf(UnitCode.UC_1580), ProblemType.SELECTION, ProblemLevel.HIGH)
 
         val actual = sut.getProblems(param)
 
