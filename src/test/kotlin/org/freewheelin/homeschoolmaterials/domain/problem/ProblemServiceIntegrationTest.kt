@@ -1,11 +1,9 @@
 package org.freewheelin.homeschoolmaterials.domain.problem
 
-import org.assertj.core.api.AssertionsForClassTypes
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.ProblemDto
 import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.Problem
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
