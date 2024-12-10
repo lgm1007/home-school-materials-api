@@ -2,6 +2,7 @@ package org.freewheelin.homeschoolmaterials.domain.problem
 
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.ProblemDto
+import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.Problem
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,17 +14,17 @@ class ProblemService(
         val realProblemCount = Math.min(param.totalCount, problems.size)
         val problemLevelCountMap = param.problemLevel.allocateProblemCount(realProblemCount)    // 난이도 별 문제 개수가 담긴 Map
 
-        val lowLevelProblems = problems.filter {
-            ProblemLevel.LOW.levels.contains(it.level)
-        }.take(problemLevelCountMap[ProblemLevel.LOW]!!)
+        val lowLevelProblems = mutableListOf<Problem>()
+        val mediumProblems = mutableListOf<Problem>()
+        val highProblems = mutableListOf<Problem>()
 
-        val mediumProblems = problems.filter {
-            ProblemLevel.MEDIUM.levels.contains(it.level)
-        }.take(problemLevelCountMap[ProblemLevel.MEDIUM]!!)
-
-        val highProblems = problems.filter {
-            ProblemLevel.HIGH.levels.contains(it.level)
-        }.take(problemLevelCountMap[ProblemLevel.HIGH]!!)
+        problems.forEach {
+            when {
+                ProblemLevel.LOW.levels.contains(it.level) && lowLevelProblems.size < problemLevelCountMap[ProblemLevel.LOW]!! -> lowLevelProblems.add(it)
+                ProblemLevel.MEDIUM.levels.contains(it.level) && mediumProblems.size < problemLevelCountMap[ProblemLevel.MEDIUM]!! -> mediumProblems.add(it)
+                ProblemLevel.HIGH.levels.contains(it.level) && highProblems.size < problemLevelCountMap[ProblemLevel.HIGH]!! -> highProblems.add(it)
+            }
+        }
 
         val resultProblems = lowLevelProblems + mediumProblems + highProblems
         return ProblemDto.listFrom(resultProblems)
