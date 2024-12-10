@@ -84,7 +84,7 @@ class ProblemServiceIntegrationTest {
     @Test
     @DisplayName("학습지에 해당하는 문제 목록 조회 테스트")
     fun getProblemByHomeSchoolIdTest() {
-        problemRepository.saveAll(ProblemDto.listFrom(makeProblems(UnitCode.UNIT_7139, ProblemType.SELECTION)))
+        problemRepository.saveAll(ProblemDto.listFrom(makeProblems(UnitCode.UC_1580, ProblemType.SELECTION)))
         homeSchoolProblemRepository.saveAll(HomeSchoolProblemDto.listFrom(makeHomeSchoolProblem(1)))
 
         val actual = sut.getProblemByHomeSchoolId(1)
