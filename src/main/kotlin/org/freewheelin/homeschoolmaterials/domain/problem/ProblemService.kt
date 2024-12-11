@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProblemService(
-    private val problemRepository: ProblemRepository
+    private val problemRepository: ProblemRepository,
+    private val homeSchoolProblemRepository: HomeSchoolProblemRepository
 ) {
     fun getProblems(param: FindProblemParam): List<ProblemDto> {
         val problems = problemRepository.getAllByUnitCodesAndProblemType(param.unitCodes, param.problemType)
@@ -27,6 +28,16 @@ class ProblemService(
         }
 
         val resultProblems = lowLevelProblems + mediumProblems + highProblems
+
         return ProblemDto.listFrom(resultProblems)
+    }
+
+    fun getProblemByHomeSchoolId(homeSchoolId: Long): List<ProblemDto> {
+        val problemIds = homeSchoolProblemRepository.getAllByHomeSchoolId(homeSchoolId).map {
+            it.problemId
+        }
+        val problems = problemRepository.getAllByIds(problemIds)
+
+        return ProblemDto.listFrom(problems)
     }
 }

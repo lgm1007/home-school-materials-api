@@ -48,10 +48,8 @@ class ProblemApi(
 	): ResponseEntity<ProblemListResponse> {
 		return ResponseEntity.ok(
 			ProblemListResponse(
-				listOf(
-					ProblemResponse(1, "유형코드", ProblemType.SELECTION, 1, "문제1"),
-					ProblemResponse(2, "유형코드", ProblemType.SELECTION, 2, "문제2"),
-					ProblemResponse(3, "유형코드", ProblemType.SUBJECTIVE, 3, "문제3"),
+				ProblemResponse.listToStudentResponse(
+					problemService.getProblemByHomeSchoolId(homeSchoolId)
 				)
 			)
 		)
