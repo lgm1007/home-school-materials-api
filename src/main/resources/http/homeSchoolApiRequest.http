@@ -5,24 +5,7 @@ Content-Type: application/json
 {
   "name": "학습지 1",
   "teacherId": 1,
-  "problemList": [
-    {
-      "id": 1,
-      "unitCode": "UNIT_7139",
-      "problemType": "SELECTION",
-      "level": 1,
-      "question": "문제 1번",
-      "answer": "3"
-    },
-    {
-      "id": 2,
-      "unitCode": "UNIT_7139",
-      "problemType": "SELECTION",
-      "level": 2,
-      "question": "문제 2번",
-      "answer": "5"
-    }
-  ]
+  "problemIds": [1, 2, 3]
 }
 
 ### 학습지 출제 API
