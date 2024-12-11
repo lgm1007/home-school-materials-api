@@ -19,5 +19,13 @@ data class HomeSchoolProblemDto(
 		fun listFrom(homeSchoolProblems: List<HomeSchoolProblem>): List<HomeSchoolProblemDto> {
 			return homeSchoolProblems.map { from(it) }
 		}
+
+		fun of(homeSchoolId: Long, problemId: Long): HomeSchoolProblemDto {
+			return HomeSchoolProblemDto(
+				0,
+				homeSchoolId,
+				problemId
+			)
+		}
 	}
 }

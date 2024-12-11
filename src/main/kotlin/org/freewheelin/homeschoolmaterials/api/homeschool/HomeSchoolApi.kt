@@ -7,12 +7,16 @@ import org.freewheelin.homeschoolmaterials.api.homeschool.response.AnalyzeHomeSc
 import org.freewheelin.homeschoolmaterials.api.homeschool.response.AnalyzeHomeSchoolResponse
 import org.freewheelin.homeschoolmaterials.api.homeschool.response.AnalyzeHomeSchoolStudentResponse
 import org.freewheelin.homeschoolmaterials.api.homeschool.response.PresentHomeSchoolResponse
+import org.freewheelin.homeschoolmaterials.domain.homeschool.HomeSchoolService
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.CreateHomeSchoolDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/v1/home-schools")
 @RestController
-class HomeSchoolApi {
+class HomeSchoolApi(
+	private val homeSchoolService: HomeSchoolService
+) {
 	/**
 	 * 학습지 생성 API
 	 */
@@ -20,7 +24,11 @@ class HomeSchoolApi {
 	fun createHomeSchool(
 		@RequestBody request: CreateHomeSchoolRequest
 	): ResponseEntity<Long> {
-		return ResponseEntity.ok(1)
+		return ResponseEntity.ok(
+			homeSchoolService.createHomeSchool(
+				CreateHomeSchoolDto.from(request)
+			)
+		)
 	}
 
 	/**
