@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
   "homeSchoolId": 1,
-  "studentId": 12345
+  "studentId": [12345, 12346, 12347]
 }
 
 ### 학습지 학습 통계 분석 API

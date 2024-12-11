@@ -4,13 +4,13 @@ import org.freewheelin.homeschoolmaterials.api.homeschool.request.PresentHomeSch
 
 data class PresentHomeSchoolDto(
     val homeSchoolId: Long,
-    val studentId: Long
+    val studentIds: List<Long>
 ) {
     companion object {
         fun from(request: PresentHomeSchoolRequest): PresentHomeSchoolDto {
             return PresentHomeSchoolDto(
                 request.homeSchoolId,
-                request.studentId
+                request.studentIds
             )
         }
     }

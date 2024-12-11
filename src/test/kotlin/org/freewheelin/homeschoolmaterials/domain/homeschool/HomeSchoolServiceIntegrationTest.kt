@@ -46,13 +46,19 @@ class HomeSchoolServiceIntegrationTest {
     @Test
     @DisplayName("학습지 출제 테스트: homeSchoolId가 1, studentId가 123인 경우 학생에게 학습지 출제 데이터 생성하기")
     fun createGivenHomeSchoolTest() {
-        val presentHomeSchoolDto = PresentHomeSchoolDto(1L, 123L)
+        val presentHomeSchoolDto = PresentHomeSchoolDto(
+            1L,
+            listOf(123L, 456L)
+        )
 
-        val givenHomeSchoolId = sut.createGivenHomeSchoolByStudent(presentHomeSchoolDto).id
+        val givenHomeSchoolIds = sut.createGivenHomeSchoolByStudent(presentHomeSchoolDto).map { it.id }
 
-        val actual = givenHomeSchoolRepository.getById(givenHomeSchoolId)
+        val actual = givenHomeSchoolIds.map {
+            givenHomeSchoolRepository.getById(it)
+        }
 
-        assertThat(actual.homeSchoolId).isEqualTo(1L)
-        assertThat(actual.studentId).isEqualTo(123L)
+        assertThat(actual.size).isEqualTo(2)
+        assertThat(actual[0].studentId).isEqualTo(123L)
+        assertThat(actual[1].studentId).isEqualTo(456L)
     }
 }

@@ -14,10 +14,12 @@ class HomeSchoolFacade(
 ) {
     @Transactional
     fun presentHomeSchool(presentHomeSchoolDto: PresentHomeSchoolDto): PresentHomeSchoolDto {
-        val givenHomeSchoolDto = homeSchoolService.createGivenHomeSchoolByStudent(presentHomeSchoolDto)
-        problemService.createSubmittedProblems(
-            CreateSubmittedProblemDto.of(givenHomeSchoolDto.homeSchoolId, givenHomeSchoolDto.id)
-        )
+        val givenHomeSchoolDtos = homeSchoolService.createGivenHomeSchoolByStudent(presentHomeSchoolDto)
+        givenHomeSchoolDtos.forEach {
+            problemService.createSubmittedProblems(
+                CreateSubmittedProblemDto.of(it.homeSchoolId, it.id)
+            )
+        }
 
         return presentHomeSchoolDto
     }

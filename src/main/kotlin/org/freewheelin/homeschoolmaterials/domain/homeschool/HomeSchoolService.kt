@@ -30,9 +30,11 @@ class HomeSchoolService(
         return homeSchoolId
     }
 
-    fun createGivenHomeSchoolByStudent(presentDto: PresentHomeSchoolDto): GivenHomeSchoolDto {
-        val givenDto = GivenHomeSchoolDto.of(presentDto.homeSchoolId, presentDto.studentId)
+    fun createGivenHomeSchoolByStudent(presentDto: PresentHomeSchoolDto): List<GivenHomeSchoolDto> {
+        val givenHomeSchoolDtos = presentDto.studentIds.map {
+            GivenHomeSchoolDto.of(presentDto.homeSchoolId, it)
+        }
 
-        return GivenHomeSchoolDto.from(givenHomeSchoolRepository.save(givenDto))
+        return GivenHomeSchoolDto.listFrom(givenHomeSchoolRepository.saveAll(givenHomeSchoolDtos))
     }
 }
