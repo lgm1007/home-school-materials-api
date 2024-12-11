@@ -9,12 +9,15 @@ import org.freewheelin.homeschoolmaterials.api.homeschool.response.AnalyzeHomeSc
 import org.freewheelin.homeschoolmaterials.api.homeschool.response.PresentHomeSchoolResponse
 import org.freewheelin.homeschoolmaterials.domain.homeschool.HomeSchoolService
 import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.CreateHomeSchoolDto
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.PresentHomeSchoolDto
+import org.freewheelin.homeschoolmaterials.facade.HomeSchoolFacade
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/v1/home-schools")
 @RestController
 class HomeSchoolApi(
+	private val homeSchoolFacade: HomeSchoolFacade,
 	private val homeSchoolService: HomeSchoolService
 ) {
 	/**
@@ -38,7 +41,13 @@ class HomeSchoolApi(
 	fun presentHomeSchool(
 		@RequestBody request: PresentHomeSchoolRequest
 	): ResponseEntity<PresentHomeSchoolResponse> {
-		return ResponseEntity.ok(PresentHomeSchoolResponse(1, 12345L))
+		return ResponseEntity.ok(
+			PresentHomeSchoolResponse.from(
+				homeSchoolFacade.presentHomeSchool(
+					PresentHomeSchoolDto.from(request)
+				)
+			)
+		)
 	}
 
 	/**
