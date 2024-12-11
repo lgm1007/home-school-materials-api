@@ -54,8 +54,8 @@ class HomeSchoolFacadeTest {
 	fun gradeProblemsTest() {
 		/*
 		 * 테스트용 데이터 세팅
-		 * 학생 ID (studentId): 12345L
 		 * 학습지 ID (homeSchoolid): 123L
+		 * 학생 ID (studentId): 12345L
 		 * 1번 문제 정답: 3
 		 * 2번 문제 정답: 5
 		 * 3번 문제 정답: 2
@@ -63,8 +63,8 @@ class HomeSchoolFacadeTest {
 		makeToGradeProblem()
 
 		val gradeProblemDto = GradeProblemDto(
-			12345L,
 			123L,
+			12345L,
 			listOf(
 				GradeSubmitProblemItemDto(1L, "3"), // 제출한 답: 정답
 				GradeSubmitProblemItemDto(2L, "5"), // 정답

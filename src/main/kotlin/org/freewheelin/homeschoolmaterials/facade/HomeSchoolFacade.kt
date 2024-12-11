@@ -36,8 +36,8 @@ class HomeSchoolFacade(
             problemService.gradeProblems(givenHomeSchoolDto.id, gradeProblemDto.submitProblems)
 
         return GradeProblemResultDto.of(
-            givenHomeSchoolDto.studentId,
             givenHomeSchoolDto.homeSchoolId,
+            givenHomeSchoolDto.studentId,
             gradeProblemResultItemDtos
         )
     }

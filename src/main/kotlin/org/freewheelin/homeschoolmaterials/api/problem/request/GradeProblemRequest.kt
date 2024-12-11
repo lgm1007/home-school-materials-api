@@ -1,8 +1,8 @@
 package org.freewheelin.homeschoolmaterials.api.problem.request
 
 data class GradeProblemRequest(
-	val studentId: Long,
 	val homeSchoolId: Long,
+	val studentId: Long,
 	val submitProblems: List<GradeSubmitProblemItemRequest>
 ) {
 }
