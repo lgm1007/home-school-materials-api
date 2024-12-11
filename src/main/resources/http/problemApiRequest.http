@@ -12,5 +12,19 @@ Content-Type: application/json
 
 {
   "studentId": 12345,
-  "homeSchoolId": 1
+  "homeSchoolId": 1,
+  "submitProblems": [
+    {
+      "problemId": 1,
+      "submitAnswer": "3"
+    },
+    {
+      "problemId": 2,
+      "submitAnswer": "5"
+    },
+    {
+      "problemId": 3,
+      "submitAnswer": "2"
+    }
+  ]
 }

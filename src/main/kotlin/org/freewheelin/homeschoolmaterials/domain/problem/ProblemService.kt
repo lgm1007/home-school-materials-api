@@ -1,11 +1,9 @@
 package org.freewheelin.homeschoolmaterials.domain.problem
 
-import org.freewheelin.homeschoolmaterials.domain.problem.dto.CreateSubmittedProblemDto
-import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
-import org.freewheelin.homeschoolmaterials.domain.problem.dto.ProblemDto
-import org.freewheelin.homeschoolmaterials.domain.problem.dto.SubmittedProblemDto
+import org.freewheelin.homeschoolmaterials.domain.problem.dto.*
 import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.Problem
 import org.springframework.stereotype.Service
+import org.webjars.NotFoundException
 
 @Service
 class ProblemService(
@@ -51,6 +49,25 @@ class ProblemService(
 
         problemIds.forEach {
             submittedProblemRepository.save(SubmittedProblemDto.of(createSubmittedDto.givenHomeSchoolId, it))
+        }
+    }
+
+    fun gradeProblems(
+        givenHomeSchoolId: Long,
+        submitProblems: List<GradeSubmitProblemItemDto>
+    ): List<GradeProblemResultItemDto> {
+        val savedSubmittedProblems = submittedProblemRepository.getAllByGivenHomeSchoolId(givenHomeSchoolId)
+
+        return submitProblems.map { submitProblem ->
+            val answer = problemRepository.getById(submitProblem.problemId).answer
+            val findSubmittedProblem = savedSubmittedProblems.find { it.problemId == submitProblem.problemId }
+                ?: throw NotFoundException("ID: ${submitProblem.problemId}인 문제 요소가 존재하지 않음")
+
+            findSubmittedProblem.gradingProblem(submitProblem.submitAnswer, answer)
+
+            GradeProblemResultItemDto.of(
+                submitProblem.problemId, answer, submitProblem.submitAnswer, findSubmittedProblem.isAnswered
+            )
         }
     }
 }
