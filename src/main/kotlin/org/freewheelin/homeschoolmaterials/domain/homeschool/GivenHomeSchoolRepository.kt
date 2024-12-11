@@ -8,6 +8,8 @@ interface GivenHomeSchoolRepository {
 
     fun getByHomeSchoolIdAndStudentId(homeSchoolId: Long, studentId: Long): GivenHomeSchool
 
+    fun getAllByHomeSchoolId(homeSchoolId: Long): List<GivenHomeSchool>
+
     fun save(givenHomeSchoolDto: GivenHomeSchoolDto): GivenHomeSchool
 
     fun saveAll(givenHomeSchoolDtos: List<GivenHomeSchoolDto>): List<GivenHomeSchool>

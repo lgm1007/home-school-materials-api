@@ -1,7 +1,10 @@
 package org.freewheelin.homeschoolmaterials.domain.problem
 
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.AnalyzeHomeSchoolProblemResultDto
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.AnalyzeHomeSchoolStudentResultDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.*
 import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.Problem
+import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.SubmittedProblem
 import org.springframework.stereotype.Service
 import org.webjars.NotFoundException
 
@@ -9,7 +12,8 @@ import org.webjars.NotFoundException
 class ProblemService(
     private val problemRepository: ProblemRepository,
     private val homeSchoolProblemRepository: HomeSchoolProblemRepository,
-    private val submittedProblemRepository: SubmittedProblemRepository
+    private val submittedProblemRepository: SubmittedProblemRepository,
+    private val answerRateAnalyzer: AnswerRateAnalyzer
 ) {
     fun getProblems(param: FindProblemParam): List<ProblemDto> {
         val problems = problemRepository.getAllByUnitCodesAndProblemType(param.unitCodes, param.problemType)
@@ -49,6 +53,30 @@ class ProblemService(
 
         problemIds.forEach {
             submittedProblemRepository.save(SubmittedProblemDto.of(createSubmittedDto.givenHomeSchoolId, it))
+        }
+    }
+
+    fun analyzeStudentAnswerRateData(givenHomeSchoolIds: List<Long>, studentId: Long): List<AnalyzeHomeSchoolStudentResultDto> {
+        return givenHomeSchoolIds.map {
+            val submittedProblemDtos = SubmittedProblemDto.listFrom(
+                submittedProblemRepository.getAllByGivenHomeSchoolId(it)
+            )
+            val answerRate = answerRateAnalyzer.calculateStudentAnswerRate(submittedProblemDtos)
+
+            AnalyzeHomeSchoolStudentResultDto.of(studentId, answerRate)
+        }
+    }
+
+    fun analyzeProblemAnswerRateData(givenHomeSchoolIds: List<Long>): List<AnalyzeHomeSchoolProblemResultDto> {
+        val submittedProblemDtos = SubmittedProblemDto.listFrom(
+            submittedProblemRepository.getAllByGivenHomeSchoolIdsIn(givenHomeSchoolIds)
+        )
+
+        return submittedProblemDtos.map {
+            val answerRate =
+                answerRateAnalyzer.calculateProblemAnswerRate(it.problemId, submittedProblemDtos)
+
+            AnalyzeHomeSchoolProblemResultDto.of(it.problemId, answerRate)
         }
     }
 

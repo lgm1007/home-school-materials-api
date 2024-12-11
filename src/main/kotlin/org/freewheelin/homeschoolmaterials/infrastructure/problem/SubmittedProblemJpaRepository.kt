@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface SubmittedProblemJpaRepository : JpaRepository<SubmittedProblem, Long> {
     fun findAllByGivenHomeSchoolId(givenHomeSchoolId: Long): List<SubmittedProblem>
+
+    fun findAllByGivenHomeSchoolIdIn(givenHomeSchoolIds: List<Long>): List<SubmittedProblem>
 }

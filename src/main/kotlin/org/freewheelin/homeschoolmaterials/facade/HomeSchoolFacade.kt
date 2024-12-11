@@ -1,6 +1,7 @@
 package org.freewheelin.homeschoolmaterials.facade
 
 import org.freewheelin.homeschoolmaterials.domain.homeschool.HomeSchoolService
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.AnalyzeHomeSchoolResultDto
 import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.PresentHomeSchoolDto
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemService
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.CreateSubmittedProblemDto
@@ -40,5 +41,10 @@ class HomeSchoolFacade(
             givenHomeSchoolDto.studentId,
             gradeProblemResultItemDtos
         )
+    }
+
+    @Transactional(readOnly = true)
+    fun analyzeHomeSchool(homeSchoolId: Long): AnalyzeHomeSchoolResultDto {
+
     }
 }

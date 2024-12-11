@@ -13,6 +13,10 @@ class SubmittedProblemRepositoryImpl(
         return jpaRepository.findAllByGivenHomeSchoolId(givenHomeSchoolId)
     }
 
+    override fun getAllByGivenHomeSchoolIdsIn(givenHomeSchoolIds: List<Long>): List<SubmittedProblem> {
+        return jpaRepository.findAllByGivenHomeSchoolIdIn(givenHomeSchoolIds)
+    }
+
     override fun save(submittedProblemDto: SubmittedProblemDto): SubmittedProblem {
         return jpaRepository.save(SubmittedProblem.from(submittedProblemDto))
     }

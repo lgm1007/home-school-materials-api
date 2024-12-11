@@ -21,6 +21,10 @@ class GivenHomeSchoolRepositoryImpl(
             ?: throw NotFoundException("HomeSchoolId: ${homeSchoolId}, StudentId: ${studentId}에 해당하는 GivenHomeSchool을 찾을 수 없음")
     }
 
+    override fun getAllByHomeSchoolId(homeSchoolId: Long): List<GivenHomeSchool> {
+        return jpaRepository.findAllByHomeSchoolId(homeSchoolId)
+    }
+
     override fun save(givenHomeSchoolDto: GivenHomeSchoolDto): GivenHomeSchool {
         return jpaRepository.save(GivenHomeSchool.from(givenHomeSchoolDto))
     }
