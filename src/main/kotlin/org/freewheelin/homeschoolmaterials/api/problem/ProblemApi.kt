@@ -13,7 +13,7 @@ import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/problems")
 @RestController
 class ProblemApi(
 	private val problemService: ProblemService
@@ -21,7 +21,7 @@ class ProblemApi(
 	/**
 	 * 문제 조회 API
 	 */
-	@GetMapping("/problems")
+	@GetMapping("")
 	fun getProblems(
 		@RequestParam totalCount: Int,
 		@RequestParam unitCodes: List<UnitCode>,
@@ -42,7 +42,7 @@ class ProblemApi(
 	/**
 	 * 학습지 문제 조회 API
 	 */
-	@GetMapping("/problems/{homeSchoolId}")
+	@GetMapping("/{homeSchoolId}")
 	fun getProblemByHomeSchoolId(
 		@PathVariable("homeSchoolId") homeSchoolId: Long
 	): ResponseEntity<ProblemListResponse> {
@@ -58,7 +58,7 @@ class ProblemApi(
 	/**
 	 * 채점하기 API
 	 */
-	@PutMapping("/problems/grade")
+	@PutMapping("/grade")
 	fun gradeProblems(
 		@RequestBody gradeProblem: GradeProblemRequest
 	): ResponseEntity<GradeProblemResultResponse> {

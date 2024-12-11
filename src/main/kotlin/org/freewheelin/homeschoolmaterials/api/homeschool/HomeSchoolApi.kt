@@ -12,7 +12,7 @@ import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.CreateHomeSchoo
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/home-schools")
 @RestController
 class HomeSchoolApi(
 	private val homeSchoolService: HomeSchoolService
@@ -20,7 +20,7 @@ class HomeSchoolApi(
 	/**
 	 * 학습지 생성 API
 	 */
-	@PostMapping("/home-schools")
+	@PostMapping("")
 	fun createHomeSchool(
 		@RequestBody request: CreateHomeSchoolRequest
 	): ResponseEntity<Long> {
@@ -34,7 +34,7 @@ class HomeSchoolApi(
 	/**
 	 * 학생에게 학습지 출제 API
 	 */
-	@PostMapping("/home-schools/present")
+	@PostMapping("/present")
 	fun presentHomeSchool(
 		@RequestBody request: PresentHomeSchoolRequest
 	): ResponseEntity<PresentHomeSchoolResponse> {
@@ -44,7 +44,7 @@ class HomeSchoolApi(
 	/**
 	 * 학습지 학습 통계 분석 API
 	 */
-	@GetMapping("/home-schools/analyze/{homeSchoolId}")
+	@GetMapping("/analyze/{homeSchoolId}")
 	fun analyzeHomeSchool(
 		@PathVariable("homeSchoolId") homeSchoolId: Id,
 	): ResponseEntity<AnalyzeHomeSchoolResponse> {
