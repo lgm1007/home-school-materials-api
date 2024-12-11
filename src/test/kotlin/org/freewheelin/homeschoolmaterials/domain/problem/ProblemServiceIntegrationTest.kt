@@ -1,6 +1,7 @@
 package org.freewheelin.homeschoolmaterials.domain.problem
 
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.freewheelin.homeschoolmaterials.domain.problem.dto.CreateSubmittedProblemDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.HomeSchoolProblemDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.ProblemDto
@@ -17,11 +18,13 @@ class ProblemServiceIntegrationTest {
     @Autowired lateinit var sut: ProblemService
     @Autowired lateinit var problemRepository: ProblemRepository
     @Autowired lateinit var homeSchoolProblemRepository: HomeSchoolProblemRepository
+    @Autowired lateinit var submittedProblemRepository: SubmittedProblemRepository
 
     @BeforeEach
     fun clearDB() {
         problemRepository.deleteAll()
         homeSchoolProblemRepository.deleteAll()
+        submittedProblemRepository.deleteAll()
     }
 
     private fun makeProblems(unitCode: UnitCode, problemType: ProblemType): List<Problem> {
@@ -93,6 +96,20 @@ class ProblemServiceIntegrationTest {
         assertThat(actual.map { it.id }.contains(1)).isTrue()
         assertThat(actual.map { it.id }.contains(2)).isTrue()
         assertThat(actual.map { it.id }.contains(3)).isTrue()
+    }
+
+    @Test
+    @DisplayName("학생에게 출제된 학습지의 문제를 저장하는 기능 테스트")
+    fun createSubmittedProblemTest() {
+        problemRepository.saveAll(ProblemDto.listFrom(makeProblems(UnitCode.UC_1580, ProblemType.SELECTION)))
+        homeSchoolProblemRepository.saveAll(HomeSchoolProblemDto.listFrom(makeHomeSchoolProblem(1L)))
+
+        sut.createSubmittedProblems(CreateSubmittedProblemDto.of(1L, 2L))
+
+        val actual = submittedProblemRepository.getAllByGivenHomeSchoolId(2L)
+
+        assertThat(actual.size).isEqualTo(3)
+        assertThat(actual.map { it.givenHomeSchoolId }.all { it == 2L }).isTrue()
     }
 
 }

@@ -1,14 +1,17 @@
 package org.freewheelin.homeschoolmaterials.domain.problem
 
+import org.freewheelin.homeschoolmaterials.domain.problem.dto.CreateSubmittedProblemDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.ProblemDto
+import org.freewheelin.homeschoolmaterials.domain.problem.dto.SubmittedProblemDto
 import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.Problem
 import org.springframework.stereotype.Service
 
 @Service
 class ProblemService(
     private val problemRepository: ProblemRepository,
-    private val homeSchoolProblemRepository: HomeSchoolProblemRepository
+    private val homeSchoolProblemRepository: HomeSchoolProblemRepository,
+    private val submittedProblemRepository: SubmittedProblemRepository
 ) {
     fun getProblems(param: FindProblemParam): List<ProblemDto> {
         val problems = problemRepository.getAllByUnitCodesAndProblemType(param.unitCodes, param.problemType)
@@ -39,5 +42,15 @@ class ProblemService(
         val problems = problemRepository.getAllByIds(problemIds)
 
         return ProblemDto.listFrom(problems)
+    }
+
+    fun createSubmittedProblems(createSubmittedDto: CreateSubmittedProblemDto) {
+        val problemIds = homeSchoolProblemRepository.getAllByHomeSchoolId(createSubmittedDto.homeSchoolId).map {
+            it.problemId
+        }
+
+        problemIds.forEach {
+            submittedProblemRepository.save(SubmittedProblemDto.of(createSubmittedDto.givenHomeSchoolId, it))
+        }
     }
 }
