@@ -17,6 +17,13 @@ class HomeSchoolService(
     private val homeSchoolProblemRepository: HomeSchoolProblemRepository,
     private val givenHomeSchoolRepository: GivenHomeSchoolRepository
 ) {
+    @Transactional(readOnly = true)
+    fun getHomeSchoolById(homeSchoolId: Long): HomeSchoolDto {
+        return HomeSchoolDto.from(
+            homeSchoolRepository.getById(homeSchoolId)
+        )
+    }
+
     @Transactional
     fun createHomeSchool(createDto: CreateHomeSchoolDto): Long {
         createDto.checkMaxProblemLength(MAX_PROBLEM_LENGTH)
@@ -42,9 +49,9 @@ class HomeSchoolService(
         return GivenHomeSchoolDto.listFrom(givenHomeSchoolRepository.saveAll(givenHomeSchoolDtos))
     }
 
-    fun getAllGivenHomeSchoolByHomeSchoolId(homeSchoolId: Long): List<GivenHomeSchoolDto> {
+    fun getAllGivenHomeSchoolByHomeSchoolIdIsDone(homeSchoolId: Long, isDone: Boolean): List<GivenHomeSchoolDto> {
         return GivenHomeSchoolDto.listFrom(
-            givenHomeSchoolRepository.getAllByHomeSchoolId(homeSchoolId)
+            givenHomeSchoolRepository.getAllByHomeSchoolIdAndIsDone(homeSchoolId, isDone)
         )
     }
 

@@ -2,10 +2,12 @@ package org.freewheelin.homeschoolmaterials.domain.problem
 
 import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.AnalyzeHomeSchoolProblemResultDto
 import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.AnalyzeHomeSchoolStudentResultDto
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.GivenHomeSchoolDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.*
 import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.Problem
 import org.freewheelin.homeschoolmaterials.infrastructure.problem.entity.SubmittedProblem
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.webjars.NotFoundException
 
 @Service
@@ -55,28 +57,33 @@ class ProblemService(
         submittedProblemRepository.saveAll(submittedProblemDtos)
     }
 
-    fun analyzeStudentAnswerRateData(givenHomeSchoolIds: List<Long>, studentId: Long): List<AnalyzeHomeSchoolStudentResultDto> {
-        return givenHomeSchoolIds.map {
+    @Transactional(readOnly = true)
+    fun analyzeStudentAnswerRateData(givenHomeSchoolDtos: List<GivenHomeSchoolDto>): List<AnalyzeHomeSchoolStudentResultDto> {
+        return givenHomeSchoolDtos.map {
             val submittedProblemDtos = SubmittedProblemDto.listFrom(
-                submittedProblemRepository.getAllByGivenHomeSchoolId(it)
+                submittedProblemRepository.getAllByGivenHomeSchoolId(it.id)
             )
             val answerRate = answerRateAnalyzer.calculateStudentAnswerRate(submittedProblemDtos)
 
-            AnalyzeHomeSchoolStudentResultDto.of(studentId, answerRate)
+            AnalyzeHomeSchoolStudentResultDto.of(it.studentId, answerRate)
         }
     }
 
-    fun analyzeProblemAnswerRateData(givenHomeSchoolIds: List<Long>): List<AnalyzeHomeSchoolProblemResultDto> {
+    @Transactional(readOnly = true)
+    fun analyzeProblemAnswerRateData(givenHomeSchoolDtos: List<GivenHomeSchoolDto>): List<AnalyzeHomeSchoolProblemResultDto> {
+        val givenHomeSchoolIds = givenHomeSchoolDtos.map { it.id }
         val submittedProblemDtos = SubmittedProblemDto.listFrom(
             submittedProblemRepository.getAllByGivenHomeSchoolIdsIn(givenHomeSchoolIds)
         )
 
-        return submittedProblemDtos.map {
-            val answerRate =
-                answerRateAnalyzer.calculateProblemAnswerRate(it.problemId, submittedProblemDtos)
+        return submittedProblemDtos
+            .distinctBy { it.problemId }
+            .map {
+                val answerRate =
+                    answerRateAnalyzer.calculateProblemAnswerRate(it.problemId, submittedProblemDtos)
 
-            AnalyzeHomeSchoolProblemResultDto.of(it.problemId, answerRate)
-        }
+                AnalyzeHomeSchoolProblemResultDto.of(it.problemId, answerRate)
+            }
     }
 
     fun gradeProblems(

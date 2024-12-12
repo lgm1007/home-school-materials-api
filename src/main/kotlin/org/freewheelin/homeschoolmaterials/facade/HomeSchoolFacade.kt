@@ -43,8 +43,15 @@ class HomeSchoolFacade(
         )
     }
 
-    @Transactional(readOnly = true)
     fun analyzeHomeSchool(homeSchoolId: Long): AnalyzeHomeSchoolResultDto {
+        val homeSchoolDto = homeSchoolService.getHomeSchoolById(homeSchoolId)
+        val givenHomeSchoolDtos = homeSchoolService.getAllGivenHomeSchoolByHomeSchoolIdIsDone(homeSchoolId, true)
 
+        return AnalyzeHomeSchoolResultDto.of(
+            homeSchoolId,
+            homeSchoolDto.name,
+            problemService.analyzeStudentAnswerRateData(givenHomeSchoolDtos),
+            problemService.analyzeProblemAnswerRateData(givenHomeSchoolDtos)
+        )
     }
 }
