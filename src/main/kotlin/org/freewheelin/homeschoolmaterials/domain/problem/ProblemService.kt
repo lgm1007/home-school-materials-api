@@ -45,12 +45,11 @@ class ProblemService(
     }
 
     fun createSubmittedProblems(createSubmittedDto: CreateSubmittedProblemDto) {
-        val problemIds = homeSchoolProblemRepository.getAllByHomeSchoolId(createSubmittedDto.homeSchoolId).map {
-            it.problemId
+        val submittedProblemDtos = homeSchoolProblemRepository.getAllByHomeSchoolId(createSubmittedDto.homeSchoolId).map {
+            val problemId = it.problemId
+            SubmittedProblemDto.of(createSubmittedDto.givenHomeSchoolId, problemId)
         }
 
-        problemIds.forEach {
-            submittedProblemRepository.save(SubmittedProblemDto.of(createSubmittedDto.givenHomeSchoolId, it))
-        }
+        submittedProblemRepository.saveAll(submittedProblemDtos)
     }
 }
