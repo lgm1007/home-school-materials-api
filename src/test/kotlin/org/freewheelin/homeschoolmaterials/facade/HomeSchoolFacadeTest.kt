@@ -2,11 +2,10 @@ package org.freewheelin.homeschoolmaterials.facade
 
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.freewheelin.homeschoolmaterials.domain.homeschool.GivenHomeSchoolRepository
+import org.freewheelin.homeschoolmaterials.domain.homeschool.HomeSchoolRepository
 import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.GivenHomeSchoolDto
-import org.freewheelin.homeschoolmaterials.domain.problem.ProblemRepository
-import org.freewheelin.homeschoolmaterials.domain.problem.ProblemType
-import org.freewheelin.homeschoolmaterials.domain.problem.SubmittedProblemRepository
-import org.freewheelin.homeschoolmaterials.domain.problem.UnitCode
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.HomeSchoolDto
+import org.freewheelin.homeschoolmaterials.domain.problem.*
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.GradeProblemDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.GradeSubmitProblemItemDto
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.ProblemDto
@@ -14,20 +13,24 @@ import org.freewheelin.homeschoolmaterials.domain.problem.dto.SubmittedProblemDt
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import java.time.LocalDateTime
 
 @SpringBootTest
 class HomeSchoolFacadeTest {
-	@Autowired lateinit var homeSchoolFacade: HomeSchoolFacade
-	@Autowired lateinit var givenHomeSchoolRepository: GivenHomeSchoolRepository
+	@Autowired lateinit var sut: HomeSchoolFacade
+	@Autowired lateinit var homeSchoolRepository: HomeSchoolRepository
 	@Autowired lateinit var problemRepository: ProblemRepository
+	@Autowired lateinit var givenHomeSchoolRepository: GivenHomeSchoolRepository
 	@Autowired lateinit var submittedProblemRepository: SubmittedProblemRepository
 
 	@BeforeEach
 	fun clearDB() {
-		givenHomeSchoolRepository.deleteAll()
+		homeSchoolRepository.deleteAll()
 		problemRepository.deleteAll()
+		givenHomeSchoolRepository.deleteAll()
 		submittedProblemRepository.deleteAll()
 	}
 
@@ -71,7 +74,7 @@ class HomeSchoolFacadeTest {
 				GradeSubmitProblemItemDto(3L, "1"), // 오답
 			)
 		)
-		homeSchoolFacade.gradeProblems(gradeProblemDto)
+		sut.gradeProblems(gradeProblemDto)
 
 		val givenHomeSchool = givenHomeSchoolRepository.getByHomeSchoolIdAndStudentId(123L, 12345L)
 		val submittedProblems = submittedProblemRepository.getAllByGivenHomeSchoolId(givenHomeSchool.id)
@@ -81,5 +84,53 @@ class HomeSchoolFacadeTest {
 		assertThat(submittedProblems[0].isAnswered).isTrue()
 		assertThat(submittedProblems[1].isAnswered).isTrue()
 		assertThat(submittedProblems[2].isAnswered).isFalse()
+	}
+
+	private fun makeToAnalyze(): Long {
+		val homeSchoolId = homeSchoolRepository.save(HomeSchoolDto(0, 111L, "1번 학습지", LocalDateTime.now())).id
+
+		val givenHomeSchools = givenHomeSchoolRepository.saveAll(
+			listOf(
+				GivenHomeSchoolDto(0, homeSchoolId, 123L, true),
+				GivenHomeSchoolDto(0, homeSchoolId, 124L, true),
+				GivenHomeSchoolDto(0, homeSchoolId, 125L, true),
+			)
+		)
+
+		/*
+		 * 학생 1: 문제1 O, 문제2 O, 문제3 O, 문제4 O - 정답률 100.0
+		 * 학생 2: 문제1 O, 문제2 O, 문제3 X, 문제4 X - 정답률 50.0
+		 * 학생 3: 문제1 O, 문제2 O, 문제3 O, 문제4 X - 정답률 75.0
+		 */
+		submittedProblemRepository.saveAll(
+			listOf(
+				SubmittedProblemDto(0, givenHomeSchools[0].id, 1L, "3", true),
+				SubmittedProblemDto(0, givenHomeSchools[0].id, 2L, "5", true),
+				SubmittedProblemDto(0, givenHomeSchools[0].id, 3L, "2", true),
+				SubmittedProblemDto(0, givenHomeSchools[0].id, 4L, "1", true),
+				SubmittedProblemDto(0, givenHomeSchools[1].id, 1L, "3", true),
+				SubmittedProblemDto(0, givenHomeSchools[1].id, 2L, "5", true),
+				SubmittedProblemDto(0, givenHomeSchools[1].id, 3L, "3", false),
+				SubmittedProblemDto(0, givenHomeSchools[1].id, 4L, "3", false),
+				SubmittedProblemDto(0, givenHomeSchools[2].id, 1L, "3", true),
+				SubmittedProblemDto(0, givenHomeSchools[2].id, 2L, "5", true),
+				SubmittedProblemDto(0, givenHomeSchools[2].id, 3L, "2", true),
+				SubmittedProblemDto(0, givenHomeSchools[2].id, 4L, "3", false),
+			)
+		)
+
+		return homeSchoolId
+	}
+
+	@Test
+	@DisplayName("학습지 학습 통계 데이터 구하기")
+	fun analyzeHomeSchool() {
+		val homeSchoolId = makeToAnalyze()
+
+		val actual = sut.analyzeHomeSchool(homeSchoolId)
+
+		assertThat(actual.name).isEqualTo("1번 학습지")
+		assertThat(actual.studentDataList.size).isEqualTo(3)
+		assertThat(actual.problemDataList.size).isEqualTo(4)
 	}
 }

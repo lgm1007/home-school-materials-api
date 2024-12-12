@@ -55,19 +55,11 @@ class HomeSchoolApi(
 	 */
 	@GetMapping("/analyze/{homeSchoolId}")
 	fun analyzeHomeSchool(
-		@PathVariable("homeSchoolId") homeSchoolId: Id,
+		@PathVariable("homeSchoolId") homeSchoolId: Long,
 	): ResponseEntity<AnalyzeHomeSchoolResponse> {
 		return ResponseEntity.ok(
-			AnalyzeHomeSchoolResponse(
-				1,
-				"학습지1",
-				listOf(
-					AnalyzeHomeSchoolStudentResponse(12345L, 66.6)
-				),
-				listOf(
-					AnalyzeHomeSchoolProblemResponse(1L, 100.0),
-					AnalyzeHomeSchoolProblemResponse(2L, 50.0)
-				)
+			AnalyzeHomeSchoolResponse.from(
+				homeSchoolFacade.analyzeHomeSchool(homeSchoolId)
 			)
 		)
 	}

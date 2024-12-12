@@ -29,7 +29,8 @@ class GivenHomeSchool(
         fun from(dto: GivenHomeSchoolDto): GivenHomeSchool {
             return GivenHomeSchool(
                 dto.homeSchoolId,
-                dto.studentId
+                dto.studentId,
+                dto.isDone
             )
         }
 

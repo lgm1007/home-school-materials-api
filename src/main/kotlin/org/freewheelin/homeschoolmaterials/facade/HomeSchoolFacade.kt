@@ -1,6 +1,7 @@
 package org.freewheelin.homeschoolmaterials.facade
 
 import org.freewheelin.homeschoolmaterials.domain.homeschool.HomeSchoolService
+import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.AnalyzeHomeSchoolResultDto
 import org.freewheelin.homeschoolmaterials.domain.homeschool.dto.PresentHomeSchoolDto
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemService
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.CreateSubmittedProblemDto
@@ -39,6 +40,18 @@ class HomeSchoolFacade(
             givenHomeSchoolDto.homeSchoolId,
             givenHomeSchoolDto.studentId,
             gradeProblemResultItemDtos
+        )
+    }
+
+    fun analyzeHomeSchool(homeSchoolId: Long): AnalyzeHomeSchoolResultDto {
+        val homeSchoolDto = homeSchoolService.getHomeSchoolById(homeSchoolId)
+        val givenHomeSchoolDtos = homeSchoolService.getAllGivenHomeSchoolByHomeSchoolIdIsDone(homeSchoolId, true)
+
+        return AnalyzeHomeSchoolResultDto.of(
+            homeSchoolId,
+            homeSchoolDto.name,
+            problemService.analyzeStudentAnswerRateData(givenHomeSchoolDtos),
+            problemService.analyzeProblemAnswerRateData(givenHomeSchoolDtos)
         )
     }
 }
