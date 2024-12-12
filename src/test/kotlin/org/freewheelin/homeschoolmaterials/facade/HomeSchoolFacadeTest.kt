@@ -34,7 +34,7 @@ class HomeSchoolFacadeTest {
 		submittedProblemRepository.deleteAll()
 	}
 
-	private fun makeToGradeProblem() {
+	private fun makeToGradeProblem(): List<Long> {
 		val givenHomeSchool = givenHomeSchoolRepository.save(
 			GivenHomeSchoolDto(0, 123L, 12345L, false)
 		)
@@ -50,6 +50,8 @@ class HomeSchoolFacadeTest {
 				SubmittedProblemDto(0, givenHomeSchool.id, it.id, "", false)
 			)
 		}
+
+		return problems.map { it.id }
 	}
 
 	@Test
@@ -63,15 +65,15 @@ class HomeSchoolFacadeTest {
 		 * 2번 문제 정답: 5
 		 * 3번 문제 정답: 2
  		 */
-		makeToGradeProblem()
+		val problemIds = makeToGradeProblem()
 
 		val gradeProblemDto = GradeProblemDto(
 			123L,
 			12345L,
 			listOf(
-				GradeSubmitProblemItemDto(1L, "3"), // 제출한 답: 정답
-				GradeSubmitProblemItemDto(2L, "5"), // 정답
-				GradeSubmitProblemItemDto(3L, "1"), // 오답
+				GradeSubmitProblemItemDto(problemIds[0], "3"), // 제출한 답: 정답
+				GradeSubmitProblemItemDto(problemIds[1], "5"), // 정답
+				GradeSubmitProblemItemDto(problemIds[2], "1"), // 오답
 			)
 		)
 		sut.gradeProblems(gradeProblemDto)

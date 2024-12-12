@@ -17,6 +17,15 @@ class ProblemServiceUnitTest {
     @Mock
     lateinit var problemRepository: ProblemRepository
 
+    @Mock
+    lateinit var homeSchoolProblemRepository: HomeSchoolProblemRepository
+
+    @Mock
+    lateinit var submittedProblemRepository: SubmittedProblemRepository
+
+    @Mock
+    lateinit var answerRateAnalyzer: AnswerRateAnalyzer
+
     @InjectMocks
     lateinit var sut: ProblemService
 
