@@ -9,6 +9,8 @@ import org.freewheelin.homeschoolmaterials.domain.problem.dto.HomeSchoolProblemD
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+private const val MAX_PROBLEM_LENGTH = 50
+
 @Service
 class HomeSchoolService(
     private val homeSchoolRepository: HomeSchoolRepository,
@@ -17,6 +19,8 @@ class HomeSchoolService(
 ) {
     @Transactional
     fun createHomeSchool(createDto: CreateHomeSchoolDto): Long {
+        createDto.checkMaxProblemLength(MAX_PROBLEM_LENGTH)
+
         val homeSchoolDto = HomeSchoolDto.of(createDto.teacherId, createDto.name)
 
         val homeSchoolId = homeSchoolRepository.save(homeSchoolDto).id
