@@ -16,12 +16,12 @@
 ### 요구 API
 #### 1️⃣ [GET] 문제 조회
 ##### API 스펙
-* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
-* [API Request 스펙](src/main/resources/http/problemApiRequest.http)
+* 🌐[[GET] /api/v1/problems API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
+* 📜[API Request 스펙](src/main/resources/http/problemApiRequest.http)
 
 ##### 관련 Issue
-* **Issue**: [API 1. 문제 조회 #1](https://github.com/lgm1007/home-school-materials-api/issues/1)
-* **Pull Request**:
+* ⚠️**Issue**: [API 1. 문제 조회 #1](https://github.com/lgm1007/home-school-materials-api/issues/1)
+* 🔗**Pull Request**:
   * [[Feature] API 1. 문제 조회하기 작업](https://github.com/lgm1007/home-school-materials-api/pull/8)
   * [[Modify] API 1. 문제 조회 시 중복 순회 부분 한 번만 순회하도록 개선](https://github.com/lgm1007/home-school-materials-api/pull/9)
 
@@ -49,12 +49,12 @@
 
 #### 2️⃣ [POST] 학습지 생성
 ##### API 스펙
-* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
-* [API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
+* 🌐[[POST] /api/v1/home-schools API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
+* 📜[API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
 
 ##### 관련 Issue
-* **Issue**: [API 2. 학습지 생성 #2](https://github.com/lgm1007/home-school-materials-api/issues/2)
-* **Pull Request**:
+* ⚠️**Issue**: [API 2. 학습지 생성 #2](https://github.com/lgm1007/home-school-materials-api/issues/2)
+* 🔗**Pull Request**:
   * [[Feature] API 2. 학습지 생성 기능 추가](https://github.com/lgm1007/home-school-materials-api/pull/11)
   * [[Modify]: API 2. 학습지 생성 시 학습지의 최대 문제 수 검사 수행](https://github.com/lgm1007/home-school-materials-api/pull/15)
 
@@ -64,14 +64,15 @@
 
 #### 3️⃣ [POST] 학생에게 학습지 출제하기
 ##### API 스펙
-* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
-* [API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
+* 🌐[[POST] /api/v1/home-schools/present API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
+* 📜[API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
 
 ##### 관련 Issue
-* **Issue**: [API 3. 학생에게 학습지 출제하기 #3](https://github.com/lgm1007/home-school-materials-api/issues/3)
-* **Pull Request**:
+* ⚠️**Issue**: [API 3. 학생에게 학습지 출제하기 #3](https://github.com/lgm1007/home-school-materials-api/issues/3)
+* 🔗**Pull Request**:
   * [[Feature] API 3. 학생에게 학습지 출제 기능 추가](https://github.com/lgm1007/home-school-materials-api/pull/12)
   * [[Modify] API 3. 학생에게 학습지 출제 중 반복적인 출제 문제 데이터 저장 시 saveAll() 사용](https://github.com/lgm1007/home-school-materials-api/pull/14)
+  * [[Modify]: API 3. 학습지 출제 시 이미 해당 학습지를 출제한 학생은 출제하지 않기 조건 추가](https://github.com/lgm1007/home-school-materials-api/pull/17)
 
 ##### 설명
 * 선생님은 학생에게 2번에서 생성했던 학습지 1개를 출제한다.
@@ -80,12 +81,12 @@
 
 #### 4️⃣ [GET] 학습지의 문제 조회하기
 ##### API 스펙
-* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
-* [API Request 스펙](src/main/resources/http/problemApiRequest.http)
+* 🌐[[GET] /api/v1/problems/{homeSchoolId} API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
+* 📜[API Request 스펙](src/main/resources/http/problemApiRequest.http)
 
 ##### 관련 Issue
-* **Issue**: [API 4. 학습지의 문제 조회하기 #4](https://github.com/lgm1007/home-school-materials-api/issues/4)
-* **Pull Request**:
+* ⚠️**Issue**: [API 4. 학습지의 문제 조회하기 #4](https://github.com/lgm1007/home-school-materials-api/issues/4)
+* 🔗**Pull Request**:
   * [[Feature] API 4. 학습지의 문제 목록 조회 기능 추가](https://github.com/lgm1007/home-school-materials-api/pull/10)
 
 ##### 설명
@@ -94,12 +95,12 @@
 
 #### 5️⃣ [PUT] 채점하기
 ##### API 스펙
-* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
-* [API Request 스펙](src/main/resources/http/problemApiRequest.http)
+* 🌐[[PUT] /api/v1/problems/grade API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/problem/ProblemApi.kt)
+* 📜[API Request 스펙](src/main/resources/http/problemApiRequest.http)
 
 ##### 관련 Issue
-* **Issue**: [API 5. 채점하기 #5](https://github.com/lgm1007/home-school-materials-api/issues/5)
-* **Pull Request**:
+* ⚠️**Issue**: [API 5. 채점하기 #5](https://github.com/lgm1007/home-school-materials-api/issues/5)
+* 🔗**Pull Request**:
   * [[Feature] API 5. 채점하기 기능 추가](https://github.com/lgm1007/home-school-materials-api/pull/13)
 
 ##### 설명
@@ -108,12 +109,12 @@
 
 #### 6️⃣ [GET] 학습지 학습 통계 분석하기
 ##### API 스펙
-* [MOCK API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
-* [API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
+* 🌐[[GET] /api/v1/home-schools/analyze/{homeSchoolId} API 구현](src/main/kotlin/org/freewheelin/homeschoolmaterials/api/homeschool/HomeSchoolApi.kt)
+* 📜[API Request 스펙](src/main/resources/http/homeSchoolApiRequest.http)
 
 ##### 관련 Issue
-* **Issue**: [API 6. 학습지 학습 통계 분석하기 #6](https://github.com/lgm1007/home-school-materials-api/issues/6)
-* **Pull Request**:
+* ⚠️**Issue**: [API 6. 학습지 학습 통계 분석하기 #6](https://github.com/lgm1007/home-school-materials-api/issues/6)
+* 🔗**Pull Request**:
   * [[Feature] API 6. 학습지 학습 통계 분석 기능 구현](https://github.com/lgm1007/home-school-materials-api/pull/16)
 
 ##### 설명
