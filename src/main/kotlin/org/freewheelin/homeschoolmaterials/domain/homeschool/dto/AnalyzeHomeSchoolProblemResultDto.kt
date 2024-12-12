@@ -2,7 +2,7 @@ package org.freewheelin.homeschoolmaterials.domain.homeschool.dto
 
 data class AnalyzeHomeSchoolProblemResultDto(
 	val problemId: Long,
-	val answerRatio: Double,
+	val answerRate: Double,
 ) {
 	companion object {
 		fun of(problemId: Long, answerRatio: Double): AnalyzeHomeSchoolProblemResultDto {
