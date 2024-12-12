@@ -25,6 +25,10 @@ class GivenHomeSchoolRepositoryImpl(
         return jpaRepository.findAllByHomeSchoolIdAndIsDone(homeSchoolId, isDone)
     }
 
+    override fun isExistByHomeSchoolIdAndStudentId(homeSchoolId: Long, studentId: Long): Boolean {
+        return jpaRepository.findByHomeSchoolIdAndStudentId(homeSchoolId, studentId) != null
+    }
+
     override fun save(givenHomeSchoolDto: GivenHomeSchoolDto): GivenHomeSchool {
         return jpaRepository.save(GivenHomeSchool.from(givenHomeSchoolDto))
     }

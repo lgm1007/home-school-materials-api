@@ -21,7 +21,7 @@ class GivenHomeSchool(
         isDone = true
     }
 
-    constructor(homeSchoolId: Long, studentId: Long, isDone: Boolean) : this(homeSchoolId, homeSchoolId) {
+    constructor(homeSchoolId: Long, studentId: Long, isDone: Boolean) : this(homeSchoolId, studentId) {
         this.isDone = isDone
     }
 

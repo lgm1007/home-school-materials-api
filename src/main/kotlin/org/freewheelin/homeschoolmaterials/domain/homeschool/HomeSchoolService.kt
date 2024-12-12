@@ -42,9 +42,9 @@ class HomeSchoolService(
     }
 
     fun createGivenHomeSchoolByStudent(presentDto: PresentHomeSchoolDto): List<GivenHomeSchoolDto> {
-        val givenHomeSchoolDtos = presentDto.studentIds.map {
-            GivenHomeSchoolDto.of(presentDto.homeSchoolId, it)
-        }
+        val givenHomeSchoolDtos = presentDto.studentIds
+            .filter { !givenHomeSchoolRepository.isExistByHomeSchoolIdAndStudentId(presentDto.homeSchoolId, it) }
+            .map { GivenHomeSchoolDto.of(presentDto.homeSchoolId, it) }
 
         return GivenHomeSchoolDto.listFrom(givenHomeSchoolRepository.saveAll(givenHomeSchoolDtos))
     }
