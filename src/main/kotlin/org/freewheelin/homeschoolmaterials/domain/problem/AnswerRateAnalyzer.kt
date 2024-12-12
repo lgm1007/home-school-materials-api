@@ -9,7 +9,7 @@ class AnswerRateAnalyzer {
 		val totalCount = submittedProblems.size
 		val answeredCount = submittedProblems.filter { it.isAnswered }.size
 
-		return ((answeredCount / totalCount) * 100) * 10.0 / 10.0
+		return ((answeredCount.toDouble() / totalCount.toDouble()) * 100) * 10.0 / 10.0
 	}
 
 	fun calculateProblemAnswerRate(problemId: Long, submittedProblems: List<SubmittedProblemDto>): Double {
@@ -17,6 +17,6 @@ class AnswerRateAnalyzer {
 		val problemCount = filteredProblems.size
 		val answeredCount = filteredProblems.filter { it.isAnswered }.size
 
-		return ((answeredCount / problemCount) * 100) * 10.0 / 10.0
+		return ((answeredCount.toDouble() / problemCount.toDouble()) * 100) * 10.0 / 10.0
 	}
 }

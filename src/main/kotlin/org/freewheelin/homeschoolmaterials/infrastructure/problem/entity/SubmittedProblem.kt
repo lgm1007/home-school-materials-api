@@ -27,11 +27,18 @@ class SubmittedProblem(
         }
     }
 
+    constructor(givenHomeSchoolId: Long, problemId: Long, submitAnswer: String, isAnswered: Boolean) : this(givenHomeSchoolId, problemId) {
+        this.submitAnswer = submitAnswer
+        this.isAnswered = isAnswered
+    }
+
     companion object {
         fun from(dto: SubmittedProblemDto): SubmittedProblem {
             return SubmittedProblem(
                 dto.givenHomeSchoolId,
-                dto.problemId
+                dto.problemId,
+                dto.submitAnswer,
+                dto.isAnswered
             )
         }
 
