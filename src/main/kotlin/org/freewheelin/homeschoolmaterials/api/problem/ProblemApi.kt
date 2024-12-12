@@ -1,7 +1,6 @@
 package org.freewheelin.homeschoolmaterials.api.problem
 
 import org.freewheelin.homeschoolmaterials.api.problem.request.GradeProblemRequest
-import org.freewheelin.homeschoolmaterials.api.problem.response.GradeProblemResponse
 import org.freewheelin.homeschoolmaterials.api.problem.response.GradeProblemResultResponse
 import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemListResponse
 import org.freewheelin.homeschoolmaterials.api.problem.response.ProblemResponse
@@ -10,13 +9,16 @@ import org.freewheelin.homeschoolmaterials.domain.problem.ProblemService
 import org.freewheelin.homeschoolmaterials.domain.problem.ProblemType
 import org.freewheelin.homeschoolmaterials.domain.problem.UnitCode
 import org.freewheelin.homeschoolmaterials.domain.problem.dto.FindProblemParam
+import org.freewheelin.homeschoolmaterials.domain.problem.dto.GradeProblemDto
+import org.freewheelin.homeschoolmaterials.facade.HomeSchoolFacade
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/v1/problems")
 @RestController
 class ProblemApi(
-	private val problemService: ProblemService
+	private val problemService: ProblemService,
+	private val homeSchoolFacade: HomeSchoolFacade
 ) {
 	/**
 	 * 문제 조회 API
@@ -60,15 +62,12 @@ class ProblemApi(
 	 */
 	@PutMapping("/grade")
 	fun gradeProblems(
-		@RequestBody gradeProblem: GradeProblemRequest
+		@RequestBody request: GradeProblemRequest
 	): ResponseEntity<GradeProblemResultResponse> {
 		return ResponseEntity.ok(
-			GradeProblemResultResponse(
-				12345L,
-				1L,
-				listOf(
-					GradeProblemResponse(1, "3", "3", true),
-					GradeProblemResponse(2, "5", "4", false),
+			GradeProblemResultResponse.from(
+				homeSchoolFacade.gradeProblems(
+					GradeProblemDto.from(request)
 				)
 			)
 		)

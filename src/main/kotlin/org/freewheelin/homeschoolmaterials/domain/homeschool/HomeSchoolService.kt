@@ -41,4 +41,13 @@ class HomeSchoolService(
 
         return GivenHomeSchoolDto.listFrom(givenHomeSchoolRepository.saveAll(givenHomeSchoolDtos))
     }
+
+    fun updateGivenHomeSchoolDoneByHomeSchoolIdAndStudentId(homeSchoolId: Long, studentId: Long): GivenHomeSchoolDto {
+        val givenHomeSchool =
+            givenHomeSchoolRepository.getByHomeSchoolIdAndStudentId(homeSchoolId, studentId)
+
+        givenHomeSchool.setIsDoneTrue()
+
+        return GivenHomeSchoolDto.from(givenHomeSchool)
+    }
 }

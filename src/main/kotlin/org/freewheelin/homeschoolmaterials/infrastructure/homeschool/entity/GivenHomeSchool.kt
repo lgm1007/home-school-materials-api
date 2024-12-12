@@ -17,6 +17,10 @@ class GivenHomeSchool(
 
     var isDone = false
 
+    fun setIsDoneTrue() {
+        isDone = true
+    }
+
     constructor(homeSchoolId: Long, studentId: Long, isDone: Boolean) : this(homeSchoolId, homeSchoolId) {
         this.isDone = isDone
     }

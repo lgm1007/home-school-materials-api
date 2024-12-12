@@ -6,6 +6,8 @@ import org.freewheelin.homeschoolmaterials.infrastructure.homeschool.entity.Give
 interface GivenHomeSchoolRepository {
     fun getById(id: Long): GivenHomeSchool
 
+    fun getByHomeSchoolIdAndStudentId(homeSchoolId: Long, studentId: Long): GivenHomeSchool
+
     fun save(givenHomeSchoolDto: GivenHomeSchoolDto): GivenHomeSchool
 
     fun saveAll(givenHomeSchoolDtos: List<GivenHomeSchoolDto>): List<GivenHomeSchool>

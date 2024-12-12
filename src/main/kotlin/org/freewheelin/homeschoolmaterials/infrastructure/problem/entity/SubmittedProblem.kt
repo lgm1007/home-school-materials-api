@@ -19,6 +19,14 @@ class SubmittedProblem(
 
     var isAnswered: Boolean = false
 
+    fun gradingProblem(submitAnswer: String, answer: String) {
+        this.submitAnswer = submitAnswer
+
+        if (this.submitAnswer == answer) {
+            isAnswered = true
+        }
+    }
+
     companion object {
         fun from(dto: SubmittedProblemDto): SubmittedProblem {
             return SubmittedProblem(
