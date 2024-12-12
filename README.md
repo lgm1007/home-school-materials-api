@@ -53,6 +53,7 @@
 * **Issue**: [API 2. 학습지 생성 #2](https://github.com/lgm1007/home-school-materials-api/issues/2)
 * **Pull Request**:
   * [[Feature] API 2. 학습지 생성 기능 추가](https://github.com/lgm1007/home-school-materials-api/pull/11)
+  * [[Modify]: API 2. 학습지 생성 시 학습지의 최대 문제 수 검사 수행](https://github.com/lgm1007/home-school-materials-api/pull/15)
 
 ##### 설명
 * 선생님은 1번에서 조회한 문제 리스트를 바탕으로 학습지를 생성한다.
@@ -66,7 +67,8 @@
 ##### 관련 Issue
 * **Issue**: [API 3. 학생에게 학습지 출제하기 #3](https://github.com/lgm1007/home-school-materials-api/issues/3)
 * **Pull Request**:
-  *
+  * [[Feature] API 3. 학생에게 학습지 출제 기능 추가](https://github.com/lgm1007/home-school-materials-api/pull/12)
+  * [[Modify] API 3. 학생에게 학습지 출제 중 반복적인 출제 문제 데이터 저장 시 saveAll() 사용](https://github.com/lgm1007/home-school-materials-api/pull/14)
 
 ##### 설명
 * 선생님은 학생에게 2번에서 생성했던 학습지 1개를 출제한다.
@@ -95,7 +97,7 @@
 ##### 관련 Issue
 * **Issue**: [API 5. 채점하기 #5](https://github.com/lgm1007/home-school-materials-api/issues/5)
 * **Pull Request**:
-  *
+  * [[Feature] API 5. 채점하기 기능 추가](https://github.com/lgm1007/home-school-materials-api/pull/13)
 
 ##### 설명
 * 학생은 4번에서 확인했던 문제들을 채점할 수 있다.
@@ -109,7 +111,7 @@
 ##### 관련 Issue
 * **Issue**: [API 6. 학습지 학습 통계 분석하기 #6](https://github.com/lgm1007/home-school-materials-api/issues/6)
 * **Pull Request**:
-  *
+  * [[Feature] API 6. 학습지 학습 통계 분석 기능 구현](https://github.com/lgm1007/home-school-materials-api/pull/16)
 
 ##### 설명
 * 선생님은 1개의 학습지에 대해 학생들의 학습 통계를 파악할 수 있다.
