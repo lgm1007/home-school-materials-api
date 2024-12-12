@@ -10,6 +10,9 @@
 * DBMS: H2
 * Testing: JUnit, Mockito
 
+### ERD
+[ERD 문서](docs/ERD.md)
+
 ### 요구 API
 #### 1️⃣ [GET] 문제 조회
 ##### API 스펙
@@ -122,5 +125,3 @@
   * 학생 개별의 학습지 정답률
   * 학습지의 문제 별 정답률 (출제받은 학생들에 한해서)
 
-### ERD
-[ERD 문서](docs/ERD.md)
