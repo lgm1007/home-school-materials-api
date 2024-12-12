@@ -45,9 +45,10 @@ erDiagram
     }
 
     HomeSchool ||--o{ HomeSchoolProblem : "1:N"
-    HomeSchoolProblem ||--o{ Problem : "1:1"
+    Problem ||--o{ HomeSchoolProblem : "N:M"
+    HomeSchool ||--o{ GivenHomeSchool : "1:N"
     GivenHomeSchool ||--o{ SubmittedProblem : "1:N"
-    SubmittedProblem ||--o{ Problem : "1:1"
+    Problem ||--o{ SubmittedProblem : "N:M"
     User ||--o{ HomeSchool : "1:N"
     User ||--o{ GivenHomeSchool : "1:N"
 ```
