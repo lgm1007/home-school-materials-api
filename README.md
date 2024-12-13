@@ -14,6 +14,8 @@
 ```
 homeschoolmaterials
 ├─api
+│  ├─advice
+│  ├─error
 │  ├─homeschool
 │  │  ├─request
 │  │  └─response
