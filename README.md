@@ -38,7 +38,7 @@ homeschoolmaterials
 
 
 ### ERD
-[ERD 문서](docs/ERD.md)
+* 📇[ERD 문서](docs/ERD.md)
 
 ### 요구 API
 #### 1️⃣ [GET] 문제 조회
