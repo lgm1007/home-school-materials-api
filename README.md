@@ -10,8 +10,37 @@
 * DBMS: H2
 * Testing: JUnit, Mockito
 
+### 프로젝트 구조
+```
+homeschoolmaterials
+├─api
+│  ├─advice
+│  ├─error
+│  ├─homeschool
+│  │  ├─request
+│  │  └─response
+│  └─problem
+│      ├─request
+│      └─response
+├─domain
+│  ├─homeschool
+│  │  └─dto
+│  └─problem
+│      └─dto
+├─facade
+└─infrastructure
+    ├─homeschool
+    │  └─entity
+    └─problem
+        └─entity
+```
+
+
+<img src="https://github.com/user-attachments/assets/d222f9cf-0e90-4d10-b36d-17843e658137" style="width: 300px">
+
+
 ### ERD
-[ERD 문서](docs/ERD.md)
+* 📇[ERD 문서](docs/ERD.md)
 
 ### 요구 API
 #### 1️⃣ [GET] 문제 조회
